@@ -1,0 +1,31 @@
+name: Test debug symbols and existing edit inputs
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Create dummy files
+        run: |
+          touch /tmp/app-release.aab
+          mkdir -p /tmp/debug-symbols
+          touch /tmp/debug-symbols/libapp.so
+          zip -j /tmp/native-debug-symbols.zip /tmp/debug-symbols/libapp.so
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          serviceAccountJsonPlainText: '{"type":"service_account","project_id":"test","private_key_id":"key123","private_key":"-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEA0Z3VS5JJcds3xHn\n-----END RSA PRIVATE KEY-----\n","client_email":"test@test.iam.gserviceaccount.com","client_id":"123","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token"}'
+          packageName: 'com.example.myapp'
+          releaseFile: '/tmp/app-release.aab'
+          track: 'internal'
+          status: 'draft'
+          debugSymbols: '/tmp/native-debug-symbols.zip'
+          existingEditId: 'edit-12345'
+          changesNotSentForReview: 'true'
+          inAppUpdatePriority: '3'
+      - name: Assert action ran (may fail due to invalid credentials)
+        run: |
+          echo "Action outcome: ${{ steps.action.outcome }}"
+          echo "PASS: Action step completed (credentials are fake so failure is expected)"

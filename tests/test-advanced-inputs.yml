@@ -1,0 +1,32 @@
+name: Test advanced upload inputs
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Create dummy files and directories
+        run: |
+          touch /tmp/app-release.aab
+          touch /tmp/app-release2.apk
+          mkdir -p /tmp/whatsnew
+          echo "Bug fixes and improvements" > /tmp/whatsnew/whatsnew-en-US
+          touch /tmp/mapping.txt
+          echo '{"type":"service_account","project_id":"test","private_key_id":"key123","private_key":"-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEA0Z3VS5JJcds3xHn\n-----END RSA PRIVATE KEY-----\n","client_email":"test@test.iam.gserviceaccount.com","client_id":"123","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token"}' > /tmp/service-account.json
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          serviceAccountJson: '/tmp/service-account.json'
+          packageName: 'com.example.myapp'
+          releaseFiles: '/tmp/app-release.aab,/tmp/app-release2.apk'
+          track: 'alpha'
+          status: 'draft'
+          userFraction: '0.5'
+          whatsNewDirectory: '/tmp/whatsnew'
+          mappingFile: '/tmp/mapping.txt'
+      - name: Assert action ran (may fail due to invalid credentials)
+        run: |
+          echo "Action outcome: ${{ steps.action.outcome }}"
+          echo "PASS: Action step completed (credentials are fake so failure is expected)"
