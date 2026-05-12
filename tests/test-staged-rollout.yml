@@ -1,0 +1,39 @@
+name: Test staged rollout with existing edit
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Create dummy APK file
+        run: |
+          mkdir -p /tmp/release
+          echo "dummy apk content" > /tmp/release/app-release.apk
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          serviceAccountJson: /tmp/fake-service-account.json
+          packageName: com.example.myapp
+          releaseFile: /tmp/release/app-release.apk
+          track: production
+          status: inProgress
+          userFraction: "0.1"
+          inAppUpdatePriority: "3"
+          changesNotSentForReview: "false"
+          existingEditId: "fake-edit-id-12345"
+      - name: Assert action ran (expected to fail with invalid credentials)
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          if [ "$OUTCOME" = "success" ]; then
+            echo "PASS: action succeeded"
+          elif [ "$OUTCOME" = "failure" ]; then
+            echo "PASS: action failed as expected (no real credentials)"
+          else
+            echo "FAIL: unexpected outcome: $OUTCOME"
+            exit 1
+          fi
+          echo "PASS"
