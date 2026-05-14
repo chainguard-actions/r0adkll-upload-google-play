@@ -10,6 +10,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 |---------|-----|-----------------|
 | v1.1.2 | [`v1.1.2`](https://github.com/chainguard-actions/upload-google-play/tree/v1.1.2) | — |
 | v1.1.3 | [`v1.1.3`](https://github.com/chainguard-actions/upload-google-play/tree/v1.1.3) | — |
+| v1.1.5 | [`v1.1.5`](https://github.com/chainguard-actions/upload-google-play/tree/v1.1.5) | — |
 
 ## Privacy
 
