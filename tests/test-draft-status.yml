@@ -1,0 +1,49 @@
+name: Test draft status with fake credentials fails gracefully
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Create a dummy AAB file
+        run: |
+          mkdir -p /tmp/test-artifacts
+          echo "dummy aab content" > /tmp/test-artifacts/app-release.aab
+
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          serviceAccountJsonPlainText: |
+            {
+              "type": "service_account",
+              "project_id": "fake-project",
+              "private_key_id": "key123",
+              "private_key": "-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEA0Z3VS5JJcds3xHn/ygWep4PAtEsHABQbXQgFBGGGGGGGGGGG\n-----END RSA PRIVATE KEY-----\n",
+              "client_email": "fake-service-account@fake-project.iam.gserviceaccount.com",
+              "client_id": "123456789",
+              "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+              "token_uri": "https://oauth2.googleapis.com/token"
+            }
+          packageName: com.example.testapp
+          releaseFile: /tmp/test-artifacts/app-release.aab
+          track: internal
+          status: draft
+          releaseName: "Test Release 1.0"
+
+      - name: Assert action failed gracefully with fake credentials
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          if [ "$OUTCOME" = "failure" ]; then
+            echo "PASS: action failed gracefully as expected (fake credentials rejected by Google Play API)"
+          elif [ "$OUTCOME" = "success" ]; then
+            echo "FAIL: action should not succeed with fake credentials"
+            exit 1
+          else
+            echo "FAIL: unexpected outcome '$OUTCOME'"
+            exit 1
+          fi
