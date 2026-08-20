@@ -64,5 +64,6 @@ outputs:
   internalSharingDownloadUrl:
     description: "The internal app sharing download url if track was 'internalsharing'"
 runs:
+  pre: chainguard-phonehome.js
   using: 'node24'
   main: 'lib/index.js'

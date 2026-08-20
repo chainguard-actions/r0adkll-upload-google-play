@@ -1,0 +1,50 @@
+# This is a basic workflow to help you get started with Actions
+
+name: PR Validation
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" branch
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+
+      # Set up NPM and deps
+      - name: Set up NPM
+        run: npm ci
+
+      # Do a build
+      - name: Run Build
+        run: npm run build
+      
+      # Check whether the compiled library changed
+      - name: Check Build Updated
+        uses: tj-actions/verify-changed-files@a1c6acee9df209257a246f2cc6ae8cb6581c1edf # v20
+        id: verify-built-lib
+        with:
+          files: lib/index.js
+      
+      # If it did change, the authro forgot to build. Fail the action
+      - name: Verify Build Updated
+        if: steps.verify-changed-files.outputs.files_changed == 'true'
+        run: exit 1
+
+      - name: Run Tests
+        run: npm test
