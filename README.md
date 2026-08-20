@@ -8,7 +8,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 | Version | Tag | Upstream commit |
 |---------|-----|-----------------|
-| v1.1.2 | [`v1.1.2`](https://github.com/chainguard-actions/r0adkll-upload-google-play/tree/v1.1.2) | — |
+| v1.1.2 | [`v1.1.2`](https://github.com/chainguard-actions/r0adkll-upload-google-play/tree/v1.1.2) | [`9cf8fd3`](https://github.com/r0adkll/upload-google-play/commit/9cf8fd30c9e616ec761db3b9abb2b0f15842ce58) |
 | v1.1.3 | [`v1.1.3`](https://github.com/chainguard-actions/r0adkll-upload-google-play/tree/v1.1.3) | — |
 | v1.1.4 | [`v1.1.4`](https://github.com/chainguard-actions/r0adkll-upload-google-play/tree/v1.1.4) | — |
 | v1.1.5 | [`v1.1.5`](https://github.com/chainguard-actions/r0adkll-upload-google-play/tree/v1.1.5) | — |
