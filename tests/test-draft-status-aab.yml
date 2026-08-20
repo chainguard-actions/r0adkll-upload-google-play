@@ -1,0 +1,40 @@
+name: Test draft status with AAB file graceful failure
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Create a dummy AAB file for testing
+        run: |
+          mkdir -p "$GITHUB_WORKSPACE/test-artifacts"
+          echo "dummy aab content" > "$GITHUB_WORKSPACE/test-artifacts/app-release.aab"
+
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          packageName: "com.example.testapp"
+          releaseFiles: "${{ github.workspace }}/test-artifacts/*.aab"
+          track: "internal"
+          status: "draft"
+          releaseName: "Test Release 1.0.0"
+          inAppUpdatePriority: "2"
+          serviceAccountJsonPlainText: '{"type":"service_account","project_id":"fake-project","private_key_id":"fake-key-id","private_key":"-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEA0Z3VS5JJcds3xHn/ygWep4PAtEsHABQdRMFBBBBBBBBBBBBB\n-----END RSA PRIVATE KEY-----\n","client_email":"fake@fake-project.iam.gserviceaccount.com","client_id":"123456789","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token"}'
+
+      - name: Assert action failed gracefully (invalid credentials, draft status)
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          if [ "$OUTCOME" = "failure" ]; then
+            echo "PASS: action failed gracefully as expected (invalid credentials with draft status)"
+          elif [ "$OUTCOME" = "success" ]; then
+            echo "FAIL: action unexpectedly succeeded with fake credentials"
+            exit 1
+          else
+            echo "FAIL: unexpected outcome '$OUTCOME'"
+            exit 1
+          fi
