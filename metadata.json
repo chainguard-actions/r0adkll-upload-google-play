@@ -1,7 +1,0 @@
-{
-  "owner": "r0adkll",
-  "name": "upload-google-play",
-  "visibility": "internal",
-  "description": "An action to upload a signed Android release (.apk or .aab) to the Google Play Store Developer Console",
-  "block_publish": false
-}
