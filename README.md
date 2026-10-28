@@ -6,12 +6,12 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 ## Versions
 
-| Version | Tag | Upstream commit |
-|---------|-----|-----------------|
-| v1.1.2 | [`v1.1.2`](https://github.com/chainguard-actions/r0adkll-upload-google-play/tree/v1.1.2) | [`9cf8fd3`](https://github.com/r0adkll/upload-google-play/commit/9cf8fd30c9e616ec761db3b9abb2b0f15842ce58) |
-| v1.1.3 | [`v1.1.3`](https://github.com/chainguard-actions/r0adkll-upload-google-play/tree/v1.1.3) | [`935ef9c`](https://github.com/r0adkll/upload-google-play/commit/935ef9c68bb393a8e6116b1575626a7f5be3a7fb) |
-| v1.1.4 | [`v1.1.4`](https://github.com/chainguard-actions/r0adkll-upload-google-play/tree/v1.1.4) | [`7f5b759`](https://github.com/r0adkll/upload-google-play/commit/7f5b759879c088a86faf85d18779f7f14e79a086) |
-| v1.1.5 | [`v1.1.5`](https://github.com/chainguard-actions/r0adkll-upload-google-play/tree/v1.1.5) | [`e738b9d`](https://github.com/r0adkll/upload-google-play/commit/e738b9dd8f2476ea806d921b64aacd24f34515a5) |
+| Version | Tag | Upstream commit | Hardening report |
+|---------|-----|-----------------|------------------|
+| v1.1.2 | [`v1.1.2`](https://github.com/chainguard-actions/r0adkll-upload-google-play/tree/v1.1.2) | [`9cf8fd3`](https://github.com/r0adkll/upload-google-play/commit/9cf8fd30c9e616ec761db3b9abb2b0f15842ce58) | [`HARDENING.md`](https://github.com/chainguard-actions/r0adkll-upload-google-play/blob/v1.1.2/HARDENING.md) |
+| v1.1.3 | [`v1.1.3`](https://github.com/chainguard-actions/r0adkll-upload-google-play/tree/v1.1.3) | [`935ef9c`](https://github.com/r0adkll/upload-google-play/commit/935ef9c68bb393a8e6116b1575626a7f5be3a7fb) | [`HARDENING.md`](https://github.com/chainguard-actions/r0adkll-upload-google-play/blob/v1.1.3/HARDENING.md) |
+| v1.1.4 | [`v1.1.4`](https://github.com/chainguard-actions/r0adkll-upload-google-play/tree/v1.1.4) | [`7f5b759`](https://github.com/r0adkll/upload-google-play/commit/7f5b759879c088a86faf85d18779f7f14e79a086) | [`HARDENING.md`](https://github.com/chainguard-actions/r0adkll-upload-google-play/blob/v1.1.4/HARDENING.md) |
+| v1.1.5 | [`v1.1.5`](https://github.com/chainguard-actions/r0adkll-upload-google-play/tree/v1.1.5) | [`e738b9d`](https://github.com/r0adkll/upload-google-play/commit/e738b9dd8f2476ea806d921b64aacd24f34515a5) | [`HARDENING.md`](https://github.com/chainguard-actions/r0adkll-upload-google-play/blob/v1.1.5/HARDENING.md) |
 
 ## Privacy
 
