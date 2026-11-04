@@ -130,7 +130,8 @@ async function validateServiceAccountJson(serviceAccountJsonRaw: string | undefi
         // If the user has provided the raw plain text, then write to file and set appropriate env variable
         const serviceAccountFile = "./serviceAccountJson.json";
         await writeFile(serviceAccountFile, serviceAccountJsonRaw, {
-            encoding: 'utf8'
+            encoding: 'utf8',
+            mode: 0o600
         });
         core.exportVariable("GOOGLE_APPLICATION_CREDENTIALS", serviceAccountFile)
     } else if (serviceAccountJson) {
